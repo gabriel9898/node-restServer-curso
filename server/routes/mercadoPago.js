@@ -17,7 +17,7 @@ app.post('/api/mercado-pago/ipn', (req, res) => {
         mercadopago.preferences.get(resp.body.preference_id).then(pref => {
           console.log('entro');
           let compra = new Compra({
-            objeto: pay.body
+            objeto: pref.body
           });
           compra.save((err, compraDB) => {
             if (err) {
