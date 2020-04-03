@@ -9,18 +9,21 @@ let Categoria = require('../models/categoria');
 // Mostrar todas las categorias
 //=========================
 app.get('/categoria', verificarToken, (req, res) => {
-  Categoria.find({}).exec((err, categorias) => {
-    if (err) {
-      return res.status(500).json({
-        ok: false,
-        err
+  Categoria.find({})
+    .sort('descripcion')
+    .populate('usuario', 'nombre email')
+    .exec((err, categorias) => {
+      if (err) {
+        return res.status(500).json({
+          ok: false,
+          err
+        });
+      }
+      res.json({
+        ok: true,
+        categorias
       });
-    }
-    res.json({
-      ok: true,
-      categorias
     });
-  });
 });
 
 //=========================
